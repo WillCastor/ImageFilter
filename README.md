@@ -1,7 +1,7 @@
 # ImageFilter
 efficient c++ image filter, all algorithms finish in O(1) time
 ## Layer blend mode
-source picture
+### source picture
 ![image](https://github.com/vxh7/ImageFilter/raw/master/doc/images/test.jpg)
 
 
