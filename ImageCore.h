@@ -99,10 +99,6 @@ namespace LIHImageCore {
      * */
     void getSubtractLookupTable(LookUpTable *table, int r, int g, int b, double opacity);
 
-    /*
-     * divide blend mode
-     * */
-    void getDivideLookupTable(LookUpTable *table, int r, int g, int b, double opacity);
 };
 
 #endif //IMAGEFILTER_IMAGECORE_H

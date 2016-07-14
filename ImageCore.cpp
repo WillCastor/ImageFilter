@@ -139,60 +139,105 @@ void LIHImageCore::getOverlayLookupTable(LookUpTable *table, int r, int g, int b
     }
 }
 
-void LIHImageCore::getHardLightLookupTable(LookUpTable *table, int r, int g, int b, double opacity){
-    for (int i=0; i<256; i++){
-        if (r<128){
-            table->red[i] = int(2.0*i*r/255*opacity + (1-opacity)*i);
+void LIHImageCore::getHardLightLookupTable(LookUpTable *table, int r, int g, int b, double opacity) {
+    for (int i = 0; i < 256; i++) {
+        if (r < 128) {
+            table->red[i] = int(2.0 * i * r / 255 * opacity + (1 - opacity) * i);
         }
-        else{
-            table->red[i] = int((255-2.0*(255-i)*(1-r/255.0))*opacity + (1-opacity)*i);
+        else {
+            table->red[i] = int((255 - 2.0 * (255 - i) * (1 - r / 255.0)) * opacity + (1 - opacity) * i);
         }
-        if (g<128){
-            table->green[i] = int(2.0*i*g/255*opacity + (1-opacity)*i);
+        if (g < 128) {
+            table->green[i] = int(2.0 * i * g / 255 * opacity + (1 - opacity) * i);
         }
-        else{
-            table->green[i] = int((255-2.0*(255-i)*(1-g/255.0))*opacity + (1-opacity)*i);
+        else {
+            table->green[i] = int((255 - 2.0 * (255 - i) * (1 - g / 255.0)) * opacity + (1 - opacity) * i);
         }
-        if (b<128){
-            table->blue[i] = int(2.0*i*b/255*opacity + (1-opacity)*i);
+        if (b < 128) {
+            table->blue[i] = int(2.0 * i * b / 255 * opacity + (1 - opacity) * i);
         }
-        else{
-            table->blue[i] = int((255-2.0*(255-i)*(1-b/255.0))*opacity + (1-opacity)*i);
+        else {
+            table->blue[i] = int((255 - 2.0 * (255 - i) * (1 - b / 255.0)) * opacity + (1 - opacity) * i);
         }
 
     }
+}
 
-/*
- * soft light blend mode
- * */
-void getSoftLightLookupTable(LookUpTable *table, int r, int g, int b, double opacity);
+void LIHImageCore::getSoftLightLookupTable(LookUpTable *table, int r, int g, int b, double opacity) {
+    for (int i=0; i<256; i++){
+        if(r<128){
+            table->red[i] = int( (2.0*r*i/255+i*i/255.0*(1-2.0*r/255))*opacity + (1-opacity)*i );
+        }
+        else{
+            table->red[i] = int( (2.0*i*(1-r/255.0)+sqrt(i/255.0)*(2.0*r-255))*opacity + (1-opacity)*i );
+        }
+        if(g<128){
+            table->green[i] = int( (2.0*g*i/255+i*i/255.0*(1-2.0*g/255))*opacity + (1-opacity)*i );
+        }
+        else{
+            table->green[i] = int( (2.0*i*(1-g/255.0)+sqrt(i/255.0)*(2.0*g-255))*opacity + (1-opacity)*i );
+        }
+        if(b<128){
+            table->blue[i] =  int( (2.0*b*i/255+i*i/255.0*(1-2.0*b/255))*opacity + (1-opacity)*i );
+        }
+        else{
+            table->blue[i] =  int( (2.0*i*(1-b/255.0)+sqrt(i/255.0)*(2.0*b-255))*opacity + (1-opacity)*i );
+        }
+    }
+}
 
-/*
- * linear light blend mode
- * */
-void getLinearLightLookupTable(LookUpTable *table, int r, int g, int b, double opacity);
+void LIHImageCore::getLinearLightLookupTable(LookUpTable *table, int r, int g, int b, double opacity){
+    for (int i=0; i<256; i++){
+        table->red[i] =  int((min(255,max(0,i+2*r-255)))*opacity + (1-opacity)*i);
+        table->green[i] = int((min(255,max(0,i+2*g-255)))*opacity + (1-opacity)*i);
+        table->blue[i] = int((min(255,max(0,i+2*b-255)))*opacity + (1-opacity)*i);
+    }
+}
 
-/*
- * pin light blend mode
- * */
-void getPinLightLookupTable(LookUpTable *table, int r, int g, int b, double opacity);
+void LIHImageCore::getPinLightLookupTable(LookUpTable *table, int r, int g, int b, double opacity){
+    for (int i=0; i<256; i++){
+        if (r<128){
+            table->red[i] = int(min(i, 2*r)*opacity + (1-opacity)*i);
+        }
+        else{
+            table->red[i] = int(max(i, 2*r-255)*opacity + (1-opacity)*i);
+        }
+        if (g<128){
+            table->green[i] = int(min(i, 2*g)*opacity + (1-opacity)*i);
+        }
+        else{
+            table->green[i] = int(max(i, 2*g-255)*opacity + (1-opacity)*i);
+        }
+        if (b<128){
+            table->blue[i] = int(min(i, 2*b)*opacity + (1-opacity)*i);
+        }
+        else{
+            table->blue[i] = int(max(i, 2*b-255)*opacity + (1-opacity)*i);
+        }
+    }
+}
 
-/*
- * difference blend mode
- * */
-void getDifferenceLookupTable(LookUpTable *table, int r, int g, int b, double opacity);
+void LIHImageCore::getDifferenceLookupTable(LookUpTable *table, int r, int g, int b, double opacity){
+    for (int i=0; i<256; i++){
+        table->red[i] = int(abs(i-r)*opacity + (1-opacity)*i);
+        table->green[i] = int(abs(i-g)*opacity + (1-opacity)*i);
+        table->blue[i] = int(abs(i-b)*opacity + (1-opacity)*i);
+    }
+}
 
-/*
- * exclusion blend mode
- * */
-void getExclusionLookupTable(LookUpTable *table, int r, int g, int b, double opacity);
+void LIHImageCore::getExclusionLookupTable(LookUpTable *table, int r, int g, int b, double opacity){
+    for (int i=0; i<256; i++){
+        table->red[i] = int((255.0/2-(2.0*i-255)*(r/255.0-0.5))*opacity + (1-opacity)*i);
+        table->green[i] = int((255.0/2-(2.0*i-255)*(g/255.0-0.5))*opacity + (1-opacity)*i);
+        table->blue[i] = int((255.0/2-(2.0*i-255)*(b/255.0-0.5))*opacity + (1-opacity)*i);
+    }
+}
 
-/*
- * subtract blend mode
- * */
-void getSubtractLookupTable(LookUpTable *table, int r, int g, int b, double opacity);
 
-/*
- * divide blend mode
- * */
-void getDivideLookupTable(LookUpTable *table, int r, int g, int b, double opacity);
+void LIHImageCore::getSubtractLookupTable(LookUpTable *table, int r, int g, int b, double opacity) {
+    for (int i=0; i<256; i++){
+        table->red[i] = int(max(0, i-r)*opacity + (1-opacity)*i);
+        table->green[i] = int(max(0, i-g)*opacity + (1-opacity)*i);
+        table->blue[i] = int(max(0, i-b)*opacity + (1-opacity)*i);
+    }
+}

@@ -21,7 +21,7 @@ int main(int argc, char **argv)
         PixelPacket *pixels = image.getPixels(0,0,image.baseColumns(),image.baseRows());
 
         LIHImageCore::LookUpTable lookUpTable;
-        LIHImageCore::getNormalLookupTable(&lookUpTable,100,200,100,0.6);
+        LIHImageCore::getDivideLookupTable(&lookUpTable,200,200,100,0.6);
 
         for(int i=0;i<image.baseColumns()*image.baseRows();i++){
             pixels[i].red = lookUpTable.red[pixels[i].red];
@@ -30,7 +30,9 @@ int main(int argc, char **argv)
         }
         image.syncPixels();
 
-        image.write("/home/lishiyu/picture/out.jpg");
+        image.write("/home/lishiyu/picture/divide.jpg");
+
+
     }
     catch(Exception &error_) {
         cout<<"Caught exception: "<<error_.what()<<endl;
