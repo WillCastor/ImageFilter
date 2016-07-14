@@ -35,6 +35,6 @@ warming up      | (opacity:0.7)                   |![image](https://github.com/v
 ### lomo
 filter name     | parameter                       | result
 ----------------|---------------------------------|---------------------------------------------------------------------------------------------------
-film            | (opacity:1.0)                   |![image](https://github.com/vxh7/ImageFilter/raw/master/doc/images/filter_lomo_softlight.jpg)
+film            | (opacity:1.0)                   |![image](https://github.com/vxh7/ImageFilter/raw/master/doc/images/filter_lomo_film.jpg)
 impression      | (opacity:0.8)                   |![image](https://github.com/vxh7/ImageFilter/raw/master/doc/images/filter_lomo_impression.jpg)
 youth           | (opacity:0.8)                   |![image](https://github.com/vxh7/ImageFilter/raw/master/doc/images/filter_lomo_youth.jpg)
