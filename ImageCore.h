@@ -99,6 +99,14 @@ namespace LIHImageCore {
      * */
     void getSubtractLookupTable(LookUpTable *table, int r, int g, int b, double opacity);
 
+    void getFilterBasicSoftlight(LookUpTable *table, double opacity);
+    void getFilterBasicWarmingUp(LookUpTable *table, double opacity);
+
+    void getFilterLOMOFilm(LookUpTable *table, double opacity);
+    void getFilterLOMOImpression(LookUpTable *table, double opacity);
+    void getFilterLOMOYouth(LookUpTable *table, double opacity);
+    void getFilterLOMO80S(LookUpTable *table, double opacity);
+
 };
 
 #endif //IMAGEFILTER_IMAGECORE_H
