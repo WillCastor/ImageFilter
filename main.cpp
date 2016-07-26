@@ -72,12 +72,12 @@ int main(int argc, char **argv)
 
     try{
         image.quiet(false);
-        image.read("/home/will/picture/test.jpg");
+        image.read("/home/will/picture/before.JPG");
 
         PixelPacket *pixels = image.getPixels(0,0,image.baseColumns(),image.baseRows());
 
         LIHImageCore::LookUpTable lookUpTable;
-        LIHImageCore::getFilterLOMOYouth(&lookUpTable,0.8);
+        LIHImageCore::getFilterBasicSoftlight(&lookUpTable,1.0);
 
         for(int i=0;i<image.baseColumns()*image.baseRows();i++){
             pixels[i].red = lookUpTable.red[pixels[i].red];
@@ -86,7 +86,7 @@ int main(int argc, char **argv)
         }
         image.syncPixels();
 
-        image.write("/home/will/picture/filter/filter_lomo_youth.jpg");
+        image.write("/home/will/picture/new_after.jpg");
 
 
     }
