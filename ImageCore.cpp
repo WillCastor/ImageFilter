@@ -301,3 +301,34 @@ void LIHImageCore::getFilterLOMOYouth(LookUpTable *table, double opacity) {
         table->blue[i] = int(blue[i]*opacity + (1-opacity)*i);
     }
 }
+
+void LIHImageCore::histogramEqualization(Magick::PixelPacket *pixels, int len){
+
+    int redTable[256] = {0};
+    int greenTable[256] = {0};
+    int blueTable[256] = {0};
+    int i;
+    for(i=0; i<len; i++){
+        redTable[pixels[i].red]++;
+        greenTable[pixels[i].green]++;
+        blueTable[pixels[i].blue]++;
+    }
+
+    for(i=1;i<256;i++){
+        redTable[i] += redTable[i-1];
+        greenTable[i] += greenTable[i-1];
+        blueTable[i] += blueTable[i-1];
+    }
+
+    for(i=0; i<256; i++){
+        redTable[i] = int(255.0*redTable[i]/len);
+        greenTable[i] = int(255.0*greenTable[i]/len);
+        blueTable[i] = int(255.0*blueTable[i]/len);
+    }
+
+    for(i=0;i<len;i++){
+        pixels[i].red = redTable[pixels[i].red];
+        pixels[i].green = greenTable[pixels[i].green];
+        pixels[i].blue = greenTable[pixels[i].blue];
+    }
+}

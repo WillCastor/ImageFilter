@@ -68,25 +68,36 @@ int main(int argc, char **argv)
 {
     InitializeMagick(*argv);
     Image image;
-    Image meitu;
+//    Image meitu;
 
     try{
         image.quiet(false);
-        image.read("/home/will/picture/before.JPG");
+        image.read("/home/will/Pictures/test.jpg");
 
+//        image.modulate(120,100,100);
         PixelPacket *pixels = image.getPixels(0,0,image.baseColumns(),image.baseRows());
+//
+//        LIHImageCore::LookUpTable lookUpTable;
+//        LIHImageCore::getFilterLOMOYouth(&lookUpTable,1.0);
+//
+//        for(int i=0;i<image.baseColumns()*image.baseRows();i++){
+//            pixels[i].red = lookUpTable.red[pixels[i].red];
+//            pixels[i].green = lookUpTable.green[pixels[i].green];
+//            pixels[i].blue = lookUpTable.blue[pixels[i].blue];
+////            printf("%d\n",pixels[i].red);
+//        }
 
-        LIHImageCore::LookUpTable lookUpTable;
-        LIHImageCore::getFilterBasicSoftlight(&lookUpTable,1.0);
+        //
+//        for (int i = 0; i <image.baseColumns()*image.baseRows() ; ++i) {
+//            pixels[i].red = int(9.175*pow(1.0*pixels[i].red,0.6));
+//            pixels[i].green = int(9.175*pow(1.0*pixels[i].green,0.6));
+//            pixels[i].blue = int(9.175*pow(1.0*pixels[i].blue,0.6));
+//        }
 
-        for(int i=0;i<image.baseColumns()*image.baseRows();i++){
-            pixels[i].red = lookUpTable.red[pixels[i].red];
-            pixels[i].green = lookUpTable.green[pixels[i].green];
-            pixels[i].blue = lookUpTable.blue[pixels[i].blue];
-        }
+        LIHImageCore::histogramEqualization(pixels,image.baseColumns()*image.baseRows());
+
         image.syncPixels();
-
-        image.write("/home/will/picture/new_after.jpg");
+        image.write("/home/will/Pictures/b.jpg");
 
 
     }
